@@ -557,10 +557,13 @@ command-line, issue the following commands:
 
 .. code:: bash
 
+   export $(grep -v ^# /etc/default/archivematica-dashboard )
    cd /usr/share/archivematica/dashboard
-   export PATH=$PATH:/usr/share/archivematica/dashboard
-   export DJANGO_SETTINGS_MODULE=settings.common
-   python manage.py createsuperuser
+   /usr/share/python/archivematica-dashboard/bin/python manage.py createsuperuser
+
+.. NOTE::
+   Use /etc/sysconfig/archivematica-dashboard as environment file on
+   CentOS/RedHat.
 
 CLI password resetting
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -570,10 +573,13 @@ user, you can change it via the command-line:
 
 .. code:: bash
 
+   export $(grep -v ^# /etc/default/archivematica-dashboard)
    cd /usr/share/archivematica/dashboard
-   export PATH=$PATH:/usr/share/archivematica/dashboard
-   export DJANGO_SETTINGS_MODULE=settings.common
-   python manage.py changepassword <username>
+   /usr/share/python/archivematica-dashboard/bin/python manage.py changepassword <username>
+
+.. NOTE::
+   Use /etc/sysconfig/archivematica-dashboard as environment file on
+   CentOS/RedHat.
 
 Security
 ^^^^^^^^
