@@ -557,7 +557,8 @@ command-line, issue the following commands:
 
 .. code:: bash
 
-   export $(grep -v ^# /etc/default/archivematica-dashboard )
+   sudo su - archivematica -s /bin/bash
+   export $(grep -v ^# /etc/default/archivematica-dashboard)
    cd /usr/share/archivematica/dashboard
    /usr/share/python/archivematica-dashboard/bin/python manage.py createsuperuser
 
@@ -573,9 +574,64 @@ user, you can change it via the command-line:
 
 .. code:: bash
 
+   sudo su - archivematica -s /bin/bash
    export $(grep -v ^# /etc/default/archivematica-dashboard)
    cd /usr/share/archivematica/dashboard
    /usr/share/python/archivematica-dashboard/bin/python manage.py changepassword <username>
+
+.. NOTE::
+   Use /etc/sysconfig/archivematica-dashboard as environment file on
+   CentOS/RedHat.
+
+CLI configuration pipeline and registration on the Storage Service
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+On new installations, the superuser can be configured and the pipeline
+registered on the Storage Service using the command-line instead of the GUI.
+These commands configure the pipeline and register it on the storage service
+exactly like the GUI for the initial configuration screen shown after the
+installation would:
+
+.. code:: bash
+
+   sudo su - archivematica -s /bin/bash
+   export $(grep -v ^# /etc/default/archivematica-dashboard)
+   cd /usr/share/archivematica/dashboard
+   /usr/share/python/archivematica-dashboard/bin/python manage.py install \
+       --username=<username> \
+       --password=<password> \
+       --email=<email-address> \
+       --org-name=<org-name> \
+       --org-id=<org-id> \
+       --api-key=<api-key>\
+       --ss-url=<ss-ulr> \
+       --ss-user=<ss-username> \
+       --ss-api-key=<ss-api-key> \
+       --whitelist=<whitelist>
+
+Where:
+
+    * api-key: Api key that will be added to the username <username>.
+      For example: "test", "4e5f32ab2aefd3577e1b19a2de5d4dd65f90101a".
+
+    * ss-url: Archivematica Storage Service URL.
+      For example: http://example.archivematica.org:8000.
+
+    * ss-user: The Storage Service username that will be used to register the
+      pipeline. This username must already exist in the Storage Service.
+
+    * ss-api-key: The <ss-username> API key. This key must already exist in
+      the Storage Service for the user <ss-username>.
+
+    * whitelist: Whitespace-separated list of IP addresses or hostnames allowed
+      to use the API. If the whitelist is left empty, all IP addresses and
+      hostnames will be allowed. For example: "192.168.1.3
+      example.archivematica.org 127.0.0.1" or "".
+
+
+These commands are most suitable to use on automated installations, for example
+when deploying using ansible. For manual installations, please use the web
+configuration method.
 
 .. NOTE::
    Use /etc/sysconfig/archivematica-dashboard as environment file on
