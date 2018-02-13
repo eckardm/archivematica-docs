@@ -12,6 +12,24 @@ Security
 This page outlines various security settings and configurations in
 Archivematica.
 
+.. _api-security:
+
+API access control
+------------------
+
+The mechanism chosen to restrict access to the API is the combination of an API
+key and a whitelist where the allowed hosts are defined.
+
+By restricting the IP addresses the impact of a compromised API key can be
+reduced.
+
+.. important::
+
+   There has been a major change in AM version 1.7 on the whitelist definition.
+   In previous versions, an empty list meant that the use of the API key was
+   not allowed from any host. From AM version 1.7, an empty list means the
+   opposite: it is allowed from any host.
+
 .. _elasticsearch-security:
 
 Elasticsearch access control
